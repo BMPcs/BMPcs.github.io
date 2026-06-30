@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildBase — Custom PC's op maat</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+  :root {
+    --black: #0D0F14;
+    --surface: #1A1D24;
+    --surface2: #22262F;
+    --blue: #00A8FF;
+    --blue-dim: #0077B6;
+    --white: #E8EAED;
+    --muted: #6B7280;
+    --border: #2A2E38;
+    --green: #00D68F;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(13,15,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--white); text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--blue); }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav ul a {
+    color: var(--muted); text-decoration: none; font-size: 14px;
+    font-weight: 500; transition: color .2s;
+  }
+  nav ul a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--blue); color: var(--black) !important;
+    padding: 10px 22px; border-radius: 8px;
+    font-weight: 600 !important; transition: opacity .2s !important;
+  }
+  .nav-cta:hover { opacity: .85 !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 120px 48px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,168,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 700; line-height: 1.0;
+    letter-spacing: -2px; max-width: 900px;
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--blue);
+  }
+  .hero p {
+    font-size: 18px; color: var(--muted);
+    max-width: 520px; line-height: 1.7; margin-bottom: 44px;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--blue); color: var(--black);
+    padding: 16px 36px; border-radius: 10px;
+    font-weight: 700; font-size: 15px;
+    text-decoration: none; transition: transform .15s, opacity .15s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { transform: translateY(-2px); opacity: .9; }
+  .btn-ghost {
+    background: transparent; color: var(--white);
+    padding: 16px 36px; border-radius: 10px;
+    font-weight: 600; font-size: 15px;
+    text-decoration: none; border: 1px solid var(--border);
+    transition: border-color .2s, color .2s; cursor: pointer;
+  }
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+  .hero-stats {
+    display: flex; gap: 56px; margin-top: 72px;
+    padding-top: 40px; border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px; font-weight: 700; color: var(--white);
+  }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* SECTION COMMON */
+  section { padding: 100px 48px; }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 700; letter-spacing: -1px;
+    line-height: 1.1; margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 16px; color: var(--muted);
+    max-width: 480px; line-height: 1.7; margin-bottom: 56px;
+  }
+
+  /* SERVICES */
+  #diensten { background: var(--surface); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+  }
+  .service-card {
+    background: var(--black);
+    padding: 40px 36px;
+    transition: background .2s;
+    cursor: default;
+  }
+  .service-card:hover { background: var(--surface2); }
+  .service-icon {
+    width: 48px; height: 48px;
+    background: rgba(0,168,255,0.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    font-size: 22px;
+  }
+  .service-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 700; margin-bottom: 12px;
+  }
+  .service-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* CONFIGURATOR */
+  #configurator { background: var(--black); }
+  .config-layout {
+    display: grid; grid-template-columns: 1fr 380px;
+    gap: 48px; align-items: start;
+  }
+
+  .config-tabs {
+    display: flex; gap: 2px; margin-bottom: 2px;
+    flex-wrap: wrap;
+  }
+  .config-tab {
+    padding: 12px 24px; font-size: 13px; font-weight: 600;
+    background: var(--surface2); color: var(--muted);
+    border: none; cursor: pointer; transition: all .15s;
+    border-radius: 0; outline: none;
+  }
+  .config-tab.active {
+    background: var(--blue); color: var(--black);
+  }
+  .config-tab:first-child { border-radius: 10px 0 0 10px; }
+  .config-tab:last-child { border-radius: 0 10px 10px 0; }
+
+  .config-panel {
+    background: var(--surface);
+    border-radius: 0 16px 16px 16px;
+    overflow: hidden;
+  }
+  .panel-section { display: none; }
+  .panel-section.active { display: block; }
+
+  .parts-list {}
+  .part-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 28px; border-bottom: 1px solid var(--border);
+    transition: background .15s; cursor: pointer;
+  }
+  .part-row:last-child { border-bottom: none; }
+  .part-row:hover { background: var(--surface2); }
+  .part-row.selected { background: rgba(0,168,255,0.08); }
+  .part-row.selected .part-check { opacity: 1; color: var(--blue); }
+  .part-info { flex: 1; }
+  .part-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .part-specs { font-size: 12px; color: var(--muted); }
+  .part-right { display: flex; align-items: center; gap: 16px; }
+  .part-price { font-weight: 700; font-size: 15px; color: var(--white); min-width: 70px; text-align: right; }
+  .part-check { font-size: 18px; opacity: 0; transition: opacity .15s; }
+
+  /* SUMMARY PANEL */
+  .summary-panel {
+    background: var(--surface); border-radius: 16px;
+    padding: 28px; position: sticky; top: 100px;
+  }
+  .summary-panel h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 700; margin-bottom: 24px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--border);
+  }
+  .summary-parts { min-height: 200px; margin-bottom: 24px; }
+  .summary-row {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid rgba(42,46,56,0.5);
+    font-size: 13px;
+  }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-part-name { color: var(--muted); }
+  .summary-part-val { font-weight: 600; }
+  .summary-total {
+    display: flex; justify-content: space-between;
+    padding: 16px 0; border-top: 2px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .summary-total span:first-child { font-weight: 700; }
+  .summary-total .total-price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px; font-weight: 700; color: var(--blue);
+  }
+  .empty-state {
+    text-align: center; padding: 40px 20px;
+    color: var(--muted); font-size: 13px;
+  }
+  .empty-state .empty-icon { font-size: 36px; margin-bottom: 12px; }
+
+  .usecase-label {
+    font-size: 12px; color: var(--muted); margin-bottom: 8px; font-weight: 500;
+  }
+  .usecase-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .usecase-btn {
+    padding: 7px 16px; font-size: 12px; font-weight: 600;
+    background: var(--surface2); color: var(--muted);
+    border: 1px solid var(--border); border-radius: 20px;
+    cursor: pointer; transition: all .15s; outline: none;
+  }
+  .usecase-btn.active {
+    background: rgba(0,168,255,0.15); color: var(--blue);
+    border-color: var(--blue);
+  }
+
+  /* EXPERT SECTION */
+  .expert-box {
+    background: linear-gradient(135deg, rgba(0,168,255,0.08), rgba(0,168,255,0.02));
+    border: 1px solid rgba(0,168,255,0.2);
+    border-radius: 20px; padding: 48px;
+    display: flex; gap: 40px; align-items: center;
+    margin-top: 60px;
+  }
+  .expert-icon { font-size: 56px; flex-shrink: 0; }
+  .expert-content h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px; font-weight: 700; margin-bottom: 12px;
+  }
+  .expert-content p { color: var(--muted); font-size: 15px; margin-bottom: 24px; line-height: 1.65; }
+  .expert-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* HOW IT WORKS */
+  #hoe-het-werkt { background: var(--surface); }
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0; position: relative;
+  }
+  .step {
+    padding: 40px 32px; position: relative;
+  }
+  .step:not(:last-child)::after {
+    content: '→';
+    position: absolute; right: -12px; top: 44px;
+    font-size: 20px; color: var(--border);
+    z-index: 1;
+  }
+  .step-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 56px; font-weight: 700;
+    color: rgba(0,168,255,0.15);
+    line-height: 1; margin-bottom: 16px;
+  }
+  .step h4 {
+    font-size: 16px; font-weight: 700; margin-bottom: 10px;
+  }
+  .step p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* CONTACT */
+  #contact { background: var(--black); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  .contact-form-wrap {}
+  .form-row { margin-bottom: 20px; }
+  .form-row label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--muted); }
+  .form-row input, .form-row textarea, .form-row select {
+    width: 100%; padding: 14px 18px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--white); font-family: 'Inter', sans-serif;
+    font-size: 15px; transition: border-color .2s; outline: none;
+    appearance: none;
+  }
+  .form-row input:focus, .form-row textarea:focus, .form-row select:focus {
+    border-color: var(--blue);
+  }
+  .form-row textarea { resize: vertical; min-height: 120px; }
+  .form-row select option { background: var(--surface); }
+  .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+  .radio-btn {
+    flex: 1; min-width: 120px;
+    padding: 14px; border: 1px solid var(--border);
+    border-radius: 10px; background: var(--surface);
+    text-align: center; cursor: pointer; transition: all .15s;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+  }
+  .radio-btn input { display: none; }
+  .radio-btn:has(input:checked) {
+    border-color: var(--blue); background: rgba(0,168,255,0.1); color: var(--blue);
+  }
+  .contact-info h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px; font-weight: 700; margin-bottom: 20px;
+  }
+  .contact-info p { color: var(--muted); font-size: 15px; line-height: 1.7; margin-bottom: 36px; }
+  .contact-detail {
+    display: flex; gap: 16px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .detail-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: var(--surface);
+    border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 18px;
+  }
+  .detail-label { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+  .detail-val { font-weight: 600; font-size: 15px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px;
+  }
+  footer .logo { font-size: 18px; }
+  footer p { font-size: 13px; color: var(--muted); }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 32px; right: 32px; z-index: 999;
+    background: var(--green); color: var(--black);
+    padding: 16px 28px; border-radius: 12px;
+    font-weight: 700; font-size: 15px;
+    transform: translateY(80px); opacity: 0;
+    transition: all .3s; pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    section { padding: 72px 24px; }
+    .config-layout { grid-template-columns: 1fr; }
+    .summary-panel { position: static; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .expert-box { flex-direction: column; text-align: center; }
+    .hero-stats { gap: 32px; flex-wrap: wrap; }
+    footer { padding: 32px 24px; }
+    .step:not(:last-child)::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Build<span>Base</span></a>
+  <ul>
+    <li><a href="#diensten">Diensten</a></li>
+    <li><a href="#hoe-het-werkt">Hoe het werkt</a></li>
+    <li><a href="#configurator">Configurator</a></li>
+    <li><a href="#contact" class="nav-cta">Aanvragen</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <p class="hero-eyebrow">Enschede · Handgemaakt · Op maat</p>
+  <h1>Jouw <em>droom-PC</em>,<br>gebouwd door ons.</h1>
+  <p>Kies zelf je onderdelen via onze configurator, of laat ons de perfecte build voor jou samenstellen. Wij bouwen, testen en leveren — klaar voor gebruik.</p>
+  <div class="hero-btns">
+    <a href="#configurator" class="btn-primary">Start configurator →</a>
+    <a href="#contact" class="btn-ghost">Laat ons kiezen</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Getest voor levering</div>
+    </div>
+    <div>
+      <div class="stat-num">2–5</div>
+      <div class="stat-label">Dagen bouwtijd</div>
+    </div>
+    <div>
+      <div class="stat-num">1 jaar</div>
+      <div class="stat-label">Garantie & support</div>
+    </div>
+  </div>
+</section>
+
+<!-- DIENSTEN -->
+<section id="diensten">
+  <div class="section-label">Wat wij doen</div>
+  <h2 class="section-title">Meer dan alleen<br>een PC bouwen</h2>
+  <p class="section-sub">Van een gaming beast tot een stille werkcomputer — wij regelen het. En daarna ook nog.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🔧</div>
+      <h3>Custom builds</h3>
+      <p>Kies zelf elke component via onze configurator. Wij bouwen, kabelen en testen alles voordat het de deur uitgaat.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎮</div>
+      <h3>Gaming PC's</h3>
+      <p>Van budget 1080p tot 4K high-refresh monster — geoptimaliseerd voor jouw spellen en budget.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💼</div>
+      <h3>Werkstations</h3>
+      <p>Video editing, 3D rendering, programmeren — wij bouwen workstations die het aankunnen, zonder gedoe.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">⚡</div>
+      <h3>Upgrades</h3>
+      <p>Meer RAM, snellere GPU, betere koeling — wij upgraden je huidige PC zodat die weer jaren mee kan.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🛠️</div>
+      <h3>Reparaties</h3>
+      <p>PC doet raar? Wij diagnosticeren en repareren — van blauwe schermen tot kapotte fans en alles daartussen.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤝</div>
+      <h3>Advies op maat</h3>
+      <p>Geen idee waar te beginnen? Beschrijf wat je wilt doen met je PC en wij stellen de beste build voor je samen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOE HET WERKT -->
+<section id="hoe-het-werkt">
+  <div class="section-label">Het proces</div>
+  <h2 class="section-title">Van idee naar<br>werkende build</h2>
+  <p class="section-sub">Simpel, transparant en zonder verrassingen.</p>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h4>Configureer of vraag aan</h4>
+      <p>Stel zelf je build samen via de configurator, of laat ons weten wat je nodig hebt.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h4>Offerte & goedkeuring</h4>
+      <p>We sturen je een gedetailleerde prijsopgave. Pas aan totdat het perfect is.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h4>Bouwen & testen</h4>
+      <p>Wij bestellen de onderdelen, bouwen zorgvuldig en testen uitvoerig.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h4>Ophalen of leveren</h4>
+      <p>Jij haalt op of wij leveren bij je thuis — klaar voor gebruik, gegarandeerd.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONFIGURATOR -->
+<section id="configurator">
+  <div class="section-label">Configurator</div>
+  <h2 class="section-title">Stel je eigen<br>build samen</h2>
+  <p class="section-sub">Klik per categorie een onderdeel aan en zie direct de prijs. Klaar? Stuur je build op!</p>
+
+  <div class="config-layout">
+    <div>
+      <!-- TABS -->
+      <div class="config-tabs">
+        <button class="config-tab active" onclick="switchTab('processor')">Processor</button>
+        <button class="config-tab" onclick="switchTab('moederbord')">Moederbord</button>
+        <button class="config-tab" onclick="switchTab('ram')">RAM</button>
+        <button class="config-tab" onclick="switchTab('gpu')">GPU</button>
+        <button class="config-tab" onclick="switchTab('opslag')">Opslag</button>
+        <button class="config-tab" onclick="switchTab('kast')">Kast</button>
+        <button class="config-tab" onclick="switchTab('voeding')">Voeding</button>
+        <button class="config-tab" onclick="switchTab('koeling')">Koeling</button>
+      </div>
+
+      <div class="config-panel">
+        <!-- PROCESSOR -->
+        <div class="panel-section active" id="panel-processor">
+          <div class="parts-list">
+            <div class="part-row" onclick="selectPart('processor','AMD Ryzen 5 7600X',229)">
+              <div class="part-info">
+                <div class="part-name">AMD Ryzen 5 7600X</div>
+                <div class="part-specs">6 cores / 12 threads · 4.7GHz base · AM5</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€229</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('processor','AMD Ryzen 7 7700X',329)">
+              <div class="part-info">
+                <div class="part-name">AMD Ryzen 7 7700X</div>
+                <div class="part-specs">8 cores / 16 threads · 4.5GHz base · AM5</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€329</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('processor','AMD Ryzen 9 7900X',429)">
+              <div class="part-info">
+                <div class="part-name">AMD Ryzen 9 7900X</div>
+                <div class="part-specs">12 cores / 24 threads · 4.7GHz base · AM5</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€429</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('processor','Intel Core i5-13600K',289)">
+              <div class="part-info">
+                <div class="part-name">Intel Core i5-13600K</div>
+                <div class="part-specs">14 cores / 20 threads · 3.5GHz base · LGA1700</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€289</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('processor','Intel Core i7-13700K',389)">
+              <div class="part-info">
+                <div class="part-name">Intel Core i7-13700K</div>
+                <div class="part-specs">16 cores / 24 threads · 3.4GHz base · LGA1700</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€389</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOEDERBORD -->
+        <div class="panel-section" id="panel-moederbord">
+          <div class="parts-list">
+            <div class="part-row" onclick="selectPart('moederbord','ASUS Prime B650M-A',149)">
+              <div class="part-info">
+                <div class="part-name">ASUS Prime B650M-A</div>
+                <div class="part-specs">AM5 · Micro-ATX · DDR5 · PCIe 5.0</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€149</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('moederbord','MSI B650 Tomahawk',199)">
+              <div class="part-info">
+                <div class="part-name">MSI B650 Tomahawk WiFi</div>
+                <div class="part-specs">AM5 · ATX · DDR5 · WiFi 6E ingebouwd</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€199</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('moederbord','ASUS ROG Strix B650E-F',299)">
+              <div class="part-info">
+                <div class="part-name">ASUS ROG Strix B650E-F</div>
+                <div class="part-specs">AM5 · ATX · DDR5 · RGB · PCIe 5.0 x16</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€299</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('moederbord','Gigabyte Z790 Aorus Elite',259)">
+              <div class="part-info">
+                <div class="part-name">Gigabyte Z790 Aorus Elite</div>
+                <div class="part-specs">LGA1700 · ATX · DDR5 · Thunderbolt 4</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€259</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RAM -->
+        <div class="panel-section" id="panel-ram">
+          <div class="parts-list">
+            <div class="part-row" onclick="selectPart('ram','16GB DDR5-5600 (2×8GB)',69)">
+              <div class="part-info">
+                <div class="part-name">16GB DDR5-5600</div>
+                <div class="part-specs">2×8GB · CL36 · Goed voor gaming & dagelijks gebruik</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€69</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('ram','32GB DDR5-5600 (2×16GB)',119)">
+              <div class="part-info">
+                <div class="part-name">32GB DDR5-5600</div>
+                <div class="part-specs">2×16GB · CL36 · Aanbevolen voor productiviteit</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€119</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('ram','64GB DDR5-6000 (2×32GB)',219)">
+              <div class="part-info">
+                <div class="part-name">64GB DDR5-6000</div>
+                <div class="part-specs">2×32GB · CL30 · Voor zware workstations</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€219</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GPU -->
+        <div class="panel-section" id="panel-gpu">
+          <div class="parts-list">
+            <div class="part-row" onclick="selectPart('gpu','NVIDIA RTX 4060',299)">
+              <div class="part-info">
+                <div class="part-name">NVIDIA GeForce RTX 4060</div>
+                <div class="part-specs">8GB GDDR6 · 1080p gaming · DLSS 3</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€299</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('gpu','NVIDIA RTX 4070',549)">
+              <div class="part-info">
+                <div class="part-name">NVIDIA GeForce RTX 4070</div>
+                <div class="part-specs">12GB GDDR6X · 1440p gaming · Uitstekende prijs/kwaliteit</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€549</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('gpu','NVIDIA RTX 4070 Ti Super',749)">
+              <div class="part-info">
+                <div class="part-name">NVIDIA GeForce RTX 4070 Ti Super</div>
+                <div class="part-specs">16GB GDDR6X · 4K ready · Topkeuze</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€749</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('gpu','NVIDIA RTX 4090',1599)">
+              <div class="part-info">
+                <div class="part-name">NVIDIA GeForce RTX 4090</div>
+                <div class="part-specs">24GB GDDR6X · 4K ultra high-refresh · Beste van het beste</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€1.599</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('gpu','AMD RX 7800 XT',449)">
+              <div class="part-info">
+                <div class="part-name">AMD Radeon RX 7800 XT</div>
+                <div class="part-specs">16GB GDDR6 · 1440p gaming · FSR 3</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€449</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPSLAG -->
+        <div class="panel-section" id="panel-opslag">
+          <div class="parts-list">
+            <div class="part-row" onclick="selectPart('opslag','500GB NVMe SSD (Samsung 980)',59)">
+              <div class="part-info">
+                <div class="part-name">500GB NVMe SSD</div>
+                <div class="part-specs">Samsung 980 · 3.500MB/s lezen · M.2 PCIe</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€59</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('opslag','1TB NVMe SSD (Samsung 980 Pro)',99)">
+              <div class="part-info">
+                <div class="part-name">1TB NVMe SSD</div>
+                <div class="part-specs">Samsung 980 Pro · 7.000MB/s lezen · PCIe 4.0</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€99</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('opslag','2TB NVMe SSD (WD Black SN850X)',179)">
+              <div class="part-info">
+                <div class="part-name">2TB NVMe SSD</div>
+                <div class="part-specs">WD Black SN850X · 7.300MB/s · PCIe 4.0</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€179</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('opslag','2TB HDD extra opslag',49)">
+              <div class="part-info">
+                <div class="part-name">2TB HDD (extra opslag)</div>
+                <div class="part-specs">Seagate Barracuda · Ideaal naast SSD</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€49</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KAST -->
+        <div class="panel-section" id="panel-kast">
+          <div class="parts-list">
+            <div class="part-row" onclick="selectPart('kast','Fractal Design Pop Air',89)">
+              <div class="part-info">
+                <div class="part-name">Fractal Design Pop Air</div>
+                <div class="part-specs">Mid-Tower · ATX · Goede airflow · Zwart</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€89</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('kast','Lian Li Lancool 216',109)">
+              <div class="part-info">
+                <div class="part-name">Lian Li Lancool 216</div>
+                <div class="part-specs">Mid-Tower · ATX · Dual 160mm fans · Glazen zijpaneel</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€109</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('kast','be quiet! Pure Base 500DX',139)">
+              <div class="part-info">
+                <div class="part-name">be quiet! Pure Base 500DX</div>
+                <div class="part-specs">Mid-Tower · Stil · ARGB · Premium afwerking</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€139</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VOEDING -->
+        <div class="panel-section" id="panel-voeding">
+          <div class="parts-list">
+            <div class="part-row" onclick="selectPart('voeding','550W 80+ Gold PSU',79)">
+              <div class="part-info">
+                <div class="part-name">550W Voeding</div>
+                <div class="part-specs">80+ Gold · Modular · Goed voor mid-range builds</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€79</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('voeding','750W 80+ Gold PSU',99)">
+              <div class="part-info">
+                <div class="part-name">750W Voeding</div>
+                <div class="part-specs">80+ Gold · Full Modular · Aanbevolen voor high-end GPU</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€99</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('voeding','850W 80+ Gold PSU',129)">
+              <div class="part-info">
+                <div class="part-name">850W Voeding</div>
+                <div class="part-specs">80+ Gold · Full Modular · RTX 4090 klaar</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€129</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KOELING -->
+        <div class="panel-section" id="panel-koeling">
+          <div class="parts-list">
+            <div class="part-row" onclick="selectPart('koeling','be quiet! Pure Rock 2 (Lucht)',39)">
+              <div class="part-info">
+                <div class="part-name">be quiet! Pure Rock 2</div>
+                <div class="part-specs">Luchtkoeling · 150W TDP · Stil · AM4/AM5/LGA1700</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€39</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('koeling','Arctic Freezer 36 A-RGB',59)">
+              <div class="part-info">
+                <div class="part-name">Arctic Freezer 36 A-RGB</div>
+                <div class="part-specs">Luchtkoeling · Dual tower · 200W TDP · RGB</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€59</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('koeling','Corsair iCUE H100i (240mm AIO)',99)">
+              <div class="part-info">
+                <div class="part-name">Corsair iCUE H100i</div>
+                <div class="part-specs">240mm AIO waterkkoeling · RGB · Top performance</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€99</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+            <div class="part-row" onclick="selectPart('koeling','NZXT Kraken 360 Elite (360mm AIO)',179)">
+              <div class="part-info">
+                <div class="part-name">NZXT Kraken 360 Elite</div>
+                <div class="part-specs">360mm AIO · LCD display · Maximale koeling</div>
+              </div>
+              <div class="part-right">
+                <div class="part-price">€179</div>
+                <div class="part-check">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div>
+      <div class="summary-panel">
+        <h3>🖥️ Jouw build</h3>
+
+        <div class="usecase-label">Gebruiksdoel</div>
+        <div class="usecase-btns">
+          <button class="usecase-btn active" onclick="setUsecase(this,'Gaming')">🎮 Gaming</button>
+          <button class="usecase-btn" onclick="setUsecase(this,'Werk')">💼 Werk</button>
+          <button class="usecase-btn" onclick="setUsecase(this,'Content')">🎬 Content</button>
+          <button class="usecase-btn" onclick="setUsecase(this,'School')">📚 School</button>
+        </div>
+
+        <div class="summary-parts" id="summary-parts">
+          <div class="empty-state">
+            <div class="empty-icon">🔩</div>
+            Klik op een onderdeel om te beginnen
+          </div>
+        </div>
+
+        <div class="summary-total" id="summary-total" style="display:none">
+          <span>Totaal (excl. arbeidskosten)</span>
+          <span class="total-price" id="total-price">€0</span>
+        </div>
+
+        <button class="btn-primary" style="width:100%;text-align:center" onclick="submitBuild()">
+          Aanvraag versturen →
+        </button>
+        <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px">Wij nemen contact op met een definitieve offerte</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERT BOX -->
+  <div class="expert-box">
+    <div class="expert-icon">🤙</div>
+    <div class="expert-content">
+      <h3>Liever dat wij het uitzoeken?</h3>
+      <p>Geen zin in de configurator? Vertel ons gewoon wat je wilt doen met je PC en voor welk budget, dan stellen wij de beste build samen. Wij kennen de markt en weten wat de beste prijs-kwaliteitsverhouding is op dit moment.</p>
+      <div class="expert-btns">
+        <a href="#contact" class="btn-primary">Stuur ons een bericht</a>
+        <a href="https://wa.me/31613967066" class="btn-ghost">WhatsApp ons</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Laten we praten</h2>
+  <p class="section-sub">Stuur ons een bericht en we reageren binnen 24 uur.</p>
+
+  <div class="contact-grid">
+    <div class="contact-form-wrap">
+      <div class="form-row">
+        <label>Jouw naam</label>
+        <input type="text" id="form-naam" placeholder="Jan de Vries">
+      </div>
+      <div class="form-row">
+        <label>E-mailadres</label>
+        <input type="email" id="form-email" placeholder="jan@email.nl">
+      </div>
+      <div class="form-row">
+        <label>Wat kan ik voor je doen?</label>
+        <div class="radio-group">
+          <label class="radio-btn">
+            <input type="radio" name="dienst" value="Custom build"> 🔧 Custom build
+          </label>
+          <label class="radio-btn">
+            <input type="radio" name="dienst" value="Advies"> 🤝 Advies
+          </label>
+          <label class="radio-btn">
+            <input type="radio" name="dienst" value="Reparatie"> 🛠️ Reparatie
+          </label>
+          <label class="radio-btn">
+            <input type="radio" name="dienst" value="Upgrade"> ⚡ Upgrade
+          </label>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Budget (ongeveer)</label>
+        <select id="form-budget">
+          <option value="">Selecteer een budget</option>
+          <option>€500 – €800</option>
+          <option>€800 – €1.200</option>
+          <option>€1.200 – €1.800</option>
+          <option>€1.800 – €2.500</option>
+          <option>€2.500+</option>
+          <option>Nog niet zeker</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Bericht</label>
+        <textarea id="form-msg" placeholder="Vertel ons meer over wat je zoekt, waarvoor je de PC gaat gebruiken, of wat er kapot is…"></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%" onclick="submitForm()">Verstuur bericht →</button>
+    </div>
+
+    <div class="contact-info">
+      <h3>Wij zijn er voor je</h3>
+      <p>Heb je een vraag, wil je langskomen, of wil je gewoon even sparren over een build? Stuur ons een bericht of app ons direct op WhatsApp.</p>
+
+      <div class="contact-detail">
+        <div class="detail-icon">📍</div>
+        <div>
+          <div class="detail-label">Locatie</div>
+          <div class="detail-val">Regio Den Haag & omgeving</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="detail-icon">💬</div>
+        <div>
+          <div class="detail-label">WhatsApp</div>
+          <div class="detail-val">06 13967066</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="detail-icon">📧</div>
+        <div>
+          <div class="detail-label">E-mail</div>
+          <div class="detail-val">bmpcs201@gmail.com</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="detail-icon">⏱️</div>
+        <div>
+          <div class="detail-label">Reactietijd</div>
+          <div class="detail-val">Binnen 24 uur</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="logo">Build<span>Base</span></a>
+  <p>© 2025 BuildBase — Handgebouwde PC's op maat</p>
+  <p style="font-size:13px;color:var(--muted)">Den Haag & omgeving · bmpcs201@gmail.com</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // State
+  const selected = {};
+  let usecase = 'Gaming';
+
+  function switchTab(cat) {
+    document.querySelectorAll('.config-tab').forEach((t,i) => t.classList.remove('active'));
+    document.querySelectorAll('.panel-section').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('panel-' + cat).classList.add('active');
+  }
+
+  function selectPart(cat, name, price) {
+    // Deselect previous in same category
+    const panel = document.getElementById('panel-' + cat);
+    panel.querySelectorAll('.part-row').forEach(r => r.classList.remove('selected'));
+
+    // Toggle: if same item already selected, deselect
+    if (selected[cat] && selected[cat].name === name) {
+      delete selected[cat];
+    } else {
+      selected[cat] = { name, price };
+      event.currentTarget.classList.add('selected');
+    }
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const container = document.getElementById('summary-parts');
+    const totalEl = document.getElementById('summary-total');
+    const priceEl = document.getElementById('total-price');
+
+    const cats = Object.keys(selected);
+    if (cats.length === 0) {
+      container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔩</div>Klik op een onderdeel om te beginnen</div>';
+      totalEl.style.display = 'none';
+      return;
+    }
+
+    const catLabels = {
+      processor:'Processor', moederbord:'Moederbord', ram:'RAM',
+      gpu:'GPU', opslag:'Opslag', kast:'Kast', voeding:'Voeding', koeling:'Koeling'
+    };
+
+    let html = '';
+    let total = 0;
+    for (const [cat, part] of Object.entries(selected)) {
+      total += part.price;
+      html += `<div class="summary-row">
+        <span class="summary-part-name">${catLabels[cat] || cat}</span>
+        <span class="summary-part-val">€${part.price.toLocaleString('nl-NL')}</span>
+      </div>`;
+    }
+
+    // Labour
+    html += `<div class="summary-row" style="margin-top:8px">
+      <span class="summary-part-name" style="color:var(--blue)">+ Arbeidskosten</span>
+      <span class="summary-part-val" style="color:var(--blue)">Offerte</span>
+    </div>`;
+
+    container.innerHTML = html;
+    totalEl.style.display = 'flex';
+    priceEl.textContent = '€' + total.toLocaleString('nl-NL');
+  }
+
+  function setUsecase(btn, val) {
+    document.querySelectorAll('.usecase-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    usecase = val;
+  }
+
+  function submitBuild() {
+    const cats = Object.keys(selected);
+    if (cats.length === 0) {
+      showToast('⚠️ Kies eerst een paar onderdelen!');
+      return;
+    }
+    // Scroll to contact and pre-fill
+    document.getElementById('form-msg').value =
+      'Gebruiksdoel: ' + usecase + '\n\nGeselecteerde onderdelen:\n' +
+      Object.entries(selected).map(([c,p]) => `- ${c}: ${p.name} (€${p.price})`).join('\n');
+    document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+    showToast('✅ Build geladen in contactformulier!');
+  }
+
+  function submitForm() {
+    const naam = document.getElementById('form-naam').value.trim();
+    const email = document.getElementById('form-email').value.trim();
+    const msg = document.getElementById('form-msg').value.trim();
+    if (!naam || !email || !msg) {
+      showToast('⚠️ Vul naam, e-mail en bericht in');
+      return;
+    }
+    showToast('✅ Bericht verstuurd! We nemen snel contact op.');
+    document.getElementById('form-naam').value = '';
+    document.getElementById('form-email').value = '';
+    document.getElementById('form-msg').value = '';
+    document.getElementById('form-budget').value = '';
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+</script>
+</body>
+</html>
