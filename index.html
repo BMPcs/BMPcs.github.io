@@ -501,11 +501,24 @@
 <section id="configurator">
   <div class="section-label">Configurator</div>
   <h2 class="section-title">Stel je eigen<br>build samen</h2>
-  <p class="section-sub">Klik per categorie een onderdeel aan en zie direct de prijs. Klaar? Stuur je build op!</p>
+  <p class="section-sub">Kies eerst je gebruiksdoel — dan filteren we de beste onderdelen voor jou.</p>
+
+  <!-- USECASE SELECTOR -->
+  <div style="margin-bottom:40px">
+    <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:2px">Waarvoor gebruik je de PC?</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="usecase-main-btn active" onclick="setUsecaseMain(this,'gaming')">🎮 Gaming</button>
+      <button class="usecase-main-btn" onclick="setUsecaseMain(this,'content')">🎬 Content Creation</button>
+      <button class="usecase-main-btn" onclick="setUsecaseMain(this,'werk')">💼 Werk / Thuis</button>
+      <button class="usecase-main-btn" onclick="setUsecaseMain(this,'school')">📚 School / Budget</button>
+    </div>
+    <div id="uc-tip" style="margin-top:14px;padding:12px 20px;background:rgba(0,168,255,0.08);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;font-size:13px;color:var(--muted)">
+      🎮 <strong style="color:var(--white)">Gaming</strong> — High-end GPU's, snelle processors en genoeg RAM voor de beste gaming ervaring.
+    </div>
+  </div>
 
   <div class="config-layout">
     <div>
-      <!-- TABS -->
       <div class="config-tabs">
         <button class="config-tab active" onclick="switchTab('processor')">Processor</button>
         <button class="config-tab" onclick="switchTab('moederbord')">Moederbord</button>
@@ -518,362 +531,38 @@
       </div>
 
       <div class="config-panel">
+
         <!-- PROCESSOR -->
         <div class="panel-section active" id="panel-processor">
-          <div class="parts-list">
-            <div class="part-row" onclick="selectPart('processor','AMD Ryzen 5 7600X',229)">
-              <div class="part-info">
-                <div class="part-name">AMD Ryzen 5 7600X</div>
-                <div class="part-specs">6 cores / 12 threads · 4.7GHz base · AM5</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€229</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('processor','AMD Ryzen 7 7700X',329)">
-              <div class="part-info">
-                <div class="part-name">AMD Ryzen 7 7700X</div>
-                <div class="part-specs">8 cores / 16 threads · 4.5GHz base · AM5</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€329</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('processor','AMD Ryzen 9 7900X',429)">
-              <div class="part-info">
-                <div class="part-name">AMD Ryzen 9 7900X</div>
-                <div class="part-specs">12 cores / 24 threads · 4.7GHz base · AM5</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€429</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('processor','Intel Core i5-13600K',289)">
-              <div class="part-info">
-                <div class="part-name">Intel Core i5-13600K</div>
-                <div class="part-specs">14 cores / 20 threads · 3.5GHz base · LGA1700</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€289</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('processor','Intel Core i7-13700K',389)">
-              <div class="part-info">
-                <div class="part-name">Intel Core i7-13700K</div>
-                <div class="part-specs">16 cores / 24 threads · 3.4GHz base · LGA1700</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€389</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-          </div>
+          <div class="parts-list" id="list-processor"></div>
         </div>
-
         <!-- MOEDERBORD -->
         <div class="panel-section" id="panel-moederbord">
-          <div class="parts-list">
-            <div class="part-row" onclick="selectPart('moederbord','ASUS Prime B650M-A',149)">
-              <div class="part-info">
-                <div class="part-name">ASUS Prime B650M-A</div>
-                <div class="part-specs">AM5 · Micro-ATX · DDR5 · PCIe 5.0</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€149</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('moederbord','MSI B650 Tomahawk',199)">
-              <div class="part-info">
-                <div class="part-name">MSI B650 Tomahawk WiFi</div>
-                <div class="part-specs">AM5 · ATX · DDR5 · WiFi 6E ingebouwd</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€199</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('moederbord','ASUS ROG Strix B650E-F',299)">
-              <div class="part-info">
-                <div class="part-name">ASUS ROG Strix B650E-F</div>
-                <div class="part-specs">AM5 · ATX · DDR5 · RGB · PCIe 5.0 x16</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€299</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('moederbord','Gigabyte Z790 Aorus Elite',259)">
-              <div class="part-info">
-                <div class="part-name">Gigabyte Z790 Aorus Elite</div>
-                <div class="part-specs">LGA1700 · ATX · DDR5 · Thunderbolt 4</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€259</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-          </div>
+          <div class="parts-list" id="list-moederbord"></div>
         </div>
-
         <!-- RAM -->
         <div class="panel-section" id="panel-ram">
-          <div class="parts-list">
-            <div class="part-row" onclick="selectPart('ram','16GB DDR5-5600 (2×8GB)',69)">
-              <div class="part-info">
-                <div class="part-name">16GB DDR5-5600</div>
-                <div class="part-specs">2×8GB · CL36 · Goed voor gaming & dagelijks gebruik</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€69</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('ram','32GB DDR5-5600 (2×16GB)',119)">
-              <div class="part-info">
-                <div class="part-name">32GB DDR5-5600</div>
-                <div class="part-specs">2×16GB · CL36 · Aanbevolen voor productiviteit</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€119</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('ram','64GB DDR5-6000 (2×32GB)',219)">
-              <div class="part-info">
-                <div class="part-name">64GB DDR5-6000</div>
-                <div class="part-specs">2×32GB · CL30 · Voor zware workstations</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€219</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-          </div>
+          <div class="parts-list" id="list-ram"></div>
         </div>
-
         <!-- GPU -->
         <div class="panel-section" id="panel-gpu">
-          <div class="parts-list">
-            <div class="part-row" onclick="selectPart('gpu','NVIDIA RTX 4060',299)">
-              <div class="part-info">
-                <div class="part-name">NVIDIA GeForce RTX 4060</div>
-                <div class="part-specs">8GB GDDR6 · 1080p gaming · DLSS 3</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€299</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('gpu','NVIDIA RTX 4070',549)">
-              <div class="part-info">
-                <div class="part-name">NVIDIA GeForce RTX 4070</div>
-                <div class="part-specs">12GB GDDR6X · 1440p gaming · Uitstekende prijs/kwaliteit</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€549</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('gpu','NVIDIA RTX 4070 Ti Super',749)">
-              <div class="part-info">
-                <div class="part-name">NVIDIA GeForce RTX 4070 Ti Super</div>
-                <div class="part-specs">16GB GDDR6X · 4K ready · Topkeuze</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€749</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('gpu','NVIDIA RTX 4090',1599)">
-              <div class="part-info">
-                <div class="part-name">NVIDIA GeForce RTX 4090</div>
-                <div class="part-specs">24GB GDDR6X · 4K ultra high-refresh · Beste van het beste</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€1.599</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('gpu','AMD RX 7800 XT',449)">
-              <div class="part-info">
-                <div class="part-name">AMD Radeon RX 7800 XT</div>
-                <div class="part-specs">16GB GDDR6 · 1440p gaming · FSR 3</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€449</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-          </div>
+          <div class="parts-list" id="list-gpu"></div>
         </div>
-
         <!-- OPSLAG -->
         <div class="panel-section" id="panel-opslag">
-          <div class="parts-list">
-            <div class="part-row" onclick="selectPart('opslag','500GB NVMe SSD (Samsung 980)',59)">
-              <div class="part-info">
-                <div class="part-name">500GB NVMe SSD</div>
-                <div class="part-specs">Samsung 980 · 3.500MB/s lezen · M.2 PCIe</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€59</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('opslag','1TB NVMe SSD (Samsung 980 Pro)',99)">
-              <div class="part-info">
-                <div class="part-name">1TB NVMe SSD</div>
-                <div class="part-specs">Samsung 980 Pro · 7.000MB/s lezen · PCIe 4.0</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€99</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('opslag','2TB NVMe SSD (WD Black SN850X)',179)">
-              <div class="part-info">
-                <div class="part-name">2TB NVMe SSD</div>
-                <div class="part-specs">WD Black SN850X · 7.300MB/s · PCIe 4.0</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€179</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('opslag','2TB HDD extra opslag',49)">
-              <div class="part-info">
-                <div class="part-name">2TB HDD (extra opslag)</div>
-                <div class="part-specs">Seagate Barracuda · Ideaal naast SSD</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€49</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-          </div>
+          <div class="parts-list" id="list-opslag"></div>
         </div>
-
         <!-- KAST -->
         <div class="panel-section" id="panel-kast">
-          <div class="parts-list">
-            <div class="part-row" onclick="selectPart('kast','Fractal Design Pop Air',89)">
-              <div class="part-info">
-                <div class="part-name">Fractal Design Pop Air</div>
-                <div class="part-specs">Mid-Tower · ATX · Goede airflow · Zwart</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€89</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('kast','Lian Li Lancool 216',109)">
-              <div class="part-info">
-                <div class="part-name">Lian Li Lancool 216</div>
-                <div class="part-specs">Mid-Tower · ATX · Dual 160mm fans · Glazen zijpaneel</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€109</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('kast','be quiet! Pure Base 500DX',139)">
-              <div class="part-info">
-                <div class="part-name">be quiet! Pure Base 500DX</div>
-                <div class="part-specs">Mid-Tower · Stil · ARGB · Premium afwerking</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€139</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-          </div>
+          <div class="parts-list" id="list-kast"></div>
         </div>
-
         <!-- VOEDING -->
         <div class="panel-section" id="panel-voeding">
-          <div class="parts-list">
-            <div class="part-row" onclick="selectPart('voeding','550W 80+ Gold PSU',79)">
-              <div class="part-info">
-                <div class="part-name">550W Voeding</div>
-                <div class="part-specs">80+ Gold · Modular · Goed voor mid-range builds</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€79</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('voeding','750W 80+ Gold PSU',99)">
-              <div class="part-info">
-                <div class="part-name">750W Voeding</div>
-                <div class="part-specs">80+ Gold · Full Modular · Aanbevolen voor high-end GPU</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€99</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('voeding','850W 80+ Gold PSU',129)">
-              <div class="part-info">
-                <div class="part-name">850W Voeding</div>
-                <div class="part-specs">80+ Gold · Full Modular · RTX 4090 klaar</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€129</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-          </div>
+          <div class="parts-list" id="list-voeding"></div>
         </div>
-
         <!-- KOELING -->
         <div class="panel-section" id="panel-koeling">
-          <div class="parts-list">
-            <div class="part-row" onclick="selectPart('koeling','be quiet! Pure Rock 2 (Lucht)',39)">
-              <div class="part-info">
-                <div class="part-name">be quiet! Pure Rock 2</div>
-                <div class="part-specs">Luchtkoeling · 150W TDP · Stil · AM4/AM5/LGA1700</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€39</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('koeling','Arctic Freezer 36 A-RGB',59)">
-              <div class="part-info">
-                <div class="part-name">Arctic Freezer 36 A-RGB</div>
-                <div class="part-specs">Luchtkoeling · Dual tower · 200W TDP · RGB</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€59</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('koeling','Corsair iCUE H100i (240mm AIO)',99)">
-              <div class="part-info">
-                <div class="part-name">Corsair iCUE H100i</div>
-                <div class="part-specs">240mm AIO waterkkoeling · RGB · Top performance</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€99</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-            <div class="part-row" onclick="selectPart('koeling','NZXT Kraken 360 Elite (360mm AIO)',179)">
-              <div class="part-info">
-                <div class="part-name">NZXT Kraken 360 Elite</div>
-                <div class="part-specs">360mm AIO · LCD display · Maximale koeling</div>
-              </div>
-              <div class="part-right">
-                <div class="part-price">€179</div>
-                <div class="part-check">✓</div>
-              </div>
-            </div>
-          </div>
+          <div class="parts-list" id="list-koeling"></div>
         </div>
       </div>
     </div>
@@ -882,27 +571,16 @@
     <div>
       <div class="summary-panel">
         <h3>🖥️ Jouw build</h3>
-
-        <div class="usecase-label">Gebruiksdoel</div>
-        <div class="usecase-btns">
-          <button class="usecase-btn active" onclick="setUsecase(this,'Gaming')">🎮 Gaming</button>
-          <button class="usecase-btn" onclick="setUsecase(this,'Werk')">💼 Werk</button>
-          <button class="usecase-btn" onclick="setUsecase(this,'Content')">🎬 Content</button>
-          <button class="usecase-btn" onclick="setUsecase(this,'School')">📚 School</button>
-        </div>
-
         <div class="summary-parts" id="summary-parts">
           <div class="empty-state">
             <div class="empty-icon">🔩</div>
-            Klik op een onderdeel om te beginnen
+            Kies je gebruiksdoel en klik op een onderdeel
           </div>
         </div>
-
         <div class="summary-total" id="summary-total" style="display:none">
           <span>Totaal (excl. arbeidskosten)</span>
           <span class="total-price" id="total-price">€0</span>
         </div>
-
         <button class="btn-primary" style="width:100%;text-align:center" onclick="submitBuild()">
           Aanvraag versturen →
         </button>
@@ -924,6 +602,291 @@
     </div>
   </div>
 </section>
+
+<style>
+  .usecase-main-btn {
+    padding: 14px 28px; font-size: 15px; font-weight: 700;
+    background: var(--surface2); color: var(--muted);
+    border: 2px solid var(--border); border-radius: 12px;
+    cursor: pointer; transition: all .2s; outline: none;
+  }
+  .usecase-main-btn.active {
+    background: rgba(0,168,255,0.15); color: var(--blue);
+    border-color: var(--blue);
+  }
+  .part-tag {
+    font-size: 10px; font-weight: 700; padding: 2px 8px;
+    border-radius: 20px; margin-left: 8px;
+    vertical-align: middle;
+  }
+  .tag-aanbevolen { background: rgba(0,214,143,0.15); color: #00D68F; }
+  .tag-budget { background: rgba(255,193,7,0.15); color: #FFC107; }
+  .tag-top { background: rgba(255,100,100,0.15); color: #FF6464; }
+  .part-row.hidden { display: none; }
+</style>
+
+<script>
+// =====================
+// PARTS DATABASE
+// =====================
+const PARTS = {
+  processor: [
+    { name:'Intel Core i3-12100', price:109, specs:'4 cores / 8 threads · 3.3GHz · LGA1700', tags:['school','werk'] },
+    { name:'AMD Ryzen 3 4300G', price:89, specs:'4 cores / 8 threads · 3.8GHz · AM4 · Met geïntegreerde GPU', tags:['school'] },
+    { name:'Intel Core i5-12400', price:159, specs:'6 cores / 12 threads · 2.5GHz · LGA1700', tags:['school','werk'] },
+    { name:'AMD Ryzen 5 5600', price:139, specs:'6 cores / 12 threads · 3.5GHz · AM4 · Populaire keuze', tags:['school','werk','gaming'] },
+    { name:'Intel Core i5-13400F', price:179, specs:'10 cores / 16 threads · 2.5GHz · LGA1700', tags:['werk','gaming'] },
+    { name:'AMD Ryzen 5 7600X', price:229, specs:'6 cores / 12 threads · 4.7GHz · AM5', tags:['gaming','werk'] },
+    { name:'Intel Core i5-13600K', price:279, specs:'14 cores / 20 threads · 3.5GHz · LGA1700', tags:['gaming','content'] },
+    { name:'AMD Ryzen 7 5700X', price:189, specs:'8 cores / 16 threads · 3.4GHz · AM4', tags:['gaming','content','werk'] },
+    { name:'AMD Ryzen 7 7700X', price:329, specs:'8 cores / 16 threads · 4.5GHz · AM5', tags:['gaming','content'] },
+    { name:'Intel Core i7-13700K', price:389, specs:'16 cores / 24 threads · 3.4GHz · LGA1700', tags:['gaming','content'] },
+    { name:'AMD Ryzen 9 7900X', price:429, specs:'12 cores / 24 threads · 4.7GHz · AM5', tags:['content'] },
+    { name:'AMD Ryzen 9 7950X', price:599, specs:'16 cores / 32 threads · 4.5GHz · AM5 · Ultiem voor rendering', tags:['content'] },
+    { name:'Intel Core i9-13900K', price:549, specs:'24 cores / 32 threads · 3.0GHz · LGA1700', tags:['content','gaming'] },
+  ],
+  moederbord: [
+    { name:'ASRock B450M-HDV', price:69, specs:'AM4 · Micro-ATX · DDR4 · Budget keuze', tags:['school'] },
+    { name:'Gigabyte B550M DS3H', price:89, specs:'AM4 · Micro-ATX · DDR4 · PCIe 4.0', tags:['school','werk'] },
+    { name:'ASUS Prime H610M-K', price:79, specs:'LGA1700 · Micro-ATX · DDR4 · Compact', tags:['school'] },
+    { name:'MSI PRO B550-VC', price:109, specs:'AM4 · ATX · DDR4 · Solide budget board', tags:['school','werk'] },
+    { name:'ASUS Prime B650M-A', price:149, specs:'AM5 · Micro-ATX · DDR5 · PCIe 5.0', tags:['werk','gaming'] },
+    { name:'Gigabyte B660M DS3H', price:129, specs:'LGA1700 · Micro-ATX · DDR4 · Goede waarde', tags:['werk','gaming'] },
+    { name:'MSI B650 Tomahawk WiFi', price:199, specs:'AM5 · ATX · DDR5 · WiFi 6E ingebouwd', tags:['gaming','werk'] },
+    { name:'ASUS TUF Gaming B650-Plus', price:219, specs:'AM5 · ATX · DDR5 · WiFi · Duurzaam', tags:['gaming'] },
+    { name:'Gigabyte Z790 Aorus Elite', price:259, specs:'LGA1700 · ATX · DDR5 · Thunderbolt 4', tags:['gaming','content'] },
+    { name:'ASUS ROG Strix B650E-F', price:299, specs:'AM5 · ATX · DDR5 · RGB · PCIe 5.0 x16', tags:['gaming','content'] },
+    { name:'MSI MEG X670E ACE', price:449, specs:'AM5 · ATX · DDR5 · WiFi 6E · Top-end', tags:['content'] },
+    { name:'ASUS ProArt X670E-Creator', price:499, specs:'AM5 · ATX · DDR5 · Thunderbolt 4 · 10G LAN', tags:['content'] },
+  ],
+  ram: [
+    { name:'8GB DDR4-3200 (1×8GB)', price:25, specs:'Kingston · Budget · Voldoende voor schoolwerk', tags:['school'] },
+    { name:'16GB DDR4-3200 (2×8GB)', price:39, specs:'Corsair · Dual channel · Dagelijks gebruik', tags:['school','werk'] },
+    { name:'16GB DDR4-3600 (2×8GB)', price:49, specs:'G.Skill Ripjaws · CL18 · Goed voor gaming op DDR4', tags:['werk','gaming'] },
+    { name:'16GB DDR5-5600 (2×8GB)', price:69, specs:'Kingston Fury · DDR5 · Gaming op AM5/LGA1700', tags:['gaming','werk'] },
+    { name:'32GB DDR4-3600 (2×16GB)', price:79, specs:'G.Skill · CL18 · Productiviteit & gaming', tags:['werk','content'] },
+    { name:'32GB DDR5-5600 (2×16GB)', price:119, specs:'Corsair Vengeance · DDR5 · Aanbevolen', tags:['gaming','content','werk'] },
+    { name:'32GB DDR5-6000 (2×16GB)', price:139, specs:'G.Skill Trident Z5 · CL30 · High-end gaming', tags:['gaming','content'] },
+    { name:'64GB DDR5-5600 (2×32GB)', price:219, specs:'Kingston · DDR5 · Zware workstations', tags:['content'] },
+    { name:'64GB DDR5-6000 (2×32GB)', price:259, specs:'G.Skill Trident Z5 · CL30 · Maximale prestaties', tags:['content'] },
+  ],
+  gpu: [
+    { name:'AMD Radeon RX 6400', price:129, specs:'4GB GDDR6 · 1080p licht gebruik · Geen stroom nodig', tags:['school'] },
+    { name:'NVIDIA GTX 1650 Super', price:149, specs:'4GB GDDR6 · 1080p · Budget gaming', tags:['school','werk'] },
+    { name:'AMD Radeon RX 6500 XT', price:159, specs:'4GB GDDR6 · 1080p medium · Energiezuinig', tags:['school'] },
+    { name:'NVIDIA RTX 3060', price:249, specs:'12GB GDDR6 · 1080p/1440p · Goede waarde', tags:['werk','gaming'] },
+    { name:'AMD Radeon RX 7600', price:269, specs:'8GB GDDR6 · 1080p high · FSR 3', tags:['werk','gaming'] },
+    { name:'NVIDIA RTX 4060', price:299, specs:'8GB GDDR6 · 1080p ultra · DLSS 3', tags:['gaming','werk'] },
+    { name:'AMD Radeon RX 7700 XT', price:369, specs:'12GB GDDR6 · 1440p · Sterke AMD optie', tags:['gaming'] },
+    { name:'AMD Radeon RX 7800 XT', price:449, specs:'16GB GDDR6 · 1440p high · FSR 3', tags:['gaming'] },
+    { name:'NVIDIA RTX 4070', price:549, specs:'12GB GDDR6X · 1440p ultra · DLSS 3 · Beste prijs/kwaliteit', tags:['gaming','content'] },
+    { name:'NVIDIA RTX 4070 Super', price:599, specs:'12GB GDDR6X · 1440p/4K · Grote stap omhoog', tags:['gaming','content'] },
+    { name:'AMD Radeon RX 7900 GRE', price:549, specs:'16GB GDDR6 · 1440p/4K · Veel VRAM voor AI/rendering', tags:['content','gaming'] },
+    { name:'NVIDIA RTX 4070 Ti Super', price:749, specs:'16GB GDDR6X · 4K ready · Content én gaming', tags:['gaming','content'] },
+    { name:'AMD Radeon RX 7900 XTX', price:899, specs:'24GB GDDR6 · 4K ultra · Maximale AMD prestaties', tags:['content','gaming'] },
+    { name:'NVIDIA RTX 4080 Super', price:999, specs:'16GB GDDR6X · 4K high-refresh · Geen compromis', tags:['gaming','content'] },
+    { name:'NVIDIA RTX 4090', price:1599, specs:'24GB GDDR6X · 4K 144Hz · Absolute top', tags:['gaming','content'] },
+  ],
+  opslag: [
+    { name:'256GB SSD (Kingston A400)', price:29, specs:'SATA SSD · 500MB/s · Basisopslag voor school', tags:['school'] },
+    { name:'500GB NVMe SSD (WD Blue)', price:49, specs:'PCIe 3.0 · 3.400MB/s · Goede instap', tags:['school','werk'] },
+    { name:'1TB NVMe SSD (Samsung 980)', price:79, specs:'PCIe 3.0 · 3.500MB/s · Ruim voor dagelijks gebruik', tags:['school','werk','gaming'] },
+    { name:'1TB NVMe SSD (Samsung 980 Pro)', price:99, specs:'PCIe 4.0 · 7.000MB/s · Sneller opstarten & laden', tags:['werk','gaming'] },
+    { name:'2TB NVMe SSD (WD Black SN850X)', price:179, specs:'PCIe 4.0 · 7.300MB/s · Ruimte voor veel games', tags:['gaming','content'] },
+    { name:'2TB NVMe SSD (Samsung 990 Pro)', price:199, specs:'PCIe 4.0 · 7.450MB/s · Top single-drive oplossing', tags:['gaming','content'] },
+    { name:'4TB NVMe SSD (WD Black)', price:349, specs:'PCIe 4.0 · Maximale opslag in één schijf', tags:['content'] },
+    { name:'2TB HDD (Seagate Barracuda)', price:49, specs:'7200 RPM · Extra opslagruimte naast SSD', tags:['school','werk','gaming'] },
+    { name:'4TB HDD (Seagate Barracuda)', price:79, specs:'7200 RPM · Ideaal voor grote mediabestanden', tags:['content','werk'] },
+  ],
+  kast: [
+    { name:'Fractal Design Core 1000', price:39, specs:'Micro-ATX · Compact · Zwart · Budget', tags:['school'] },
+    { name:'NZXT H510 (refurb)', price:49, specs:'Mid-Tower · ATX · Strak design · Goedkoop', tags:['school','werk'] },
+    { name:'Corsair 4000D Airflow', price:79, specs:'Mid-Tower · ATX · Uitstekende airflow', tags:['werk','gaming'] },
+    { name:'Fractal Design Pop Air', price:89, specs:'Mid-Tower · ATX · Goede airflow · Zwart', tags:['werk','gaming'] },
+    { name:'Lian Li Lancool 216', price:109, specs:'Mid-Tower · ATX · Dual 160mm fans · Glazen zijpaneel', tags:['gaming'] },
+    { name:'be quiet! Pure Base 500DX', price:139, specs:'Mid-Tower · Stil · ARGB · Premium afwerking', tags:['gaming','content'] },
+    { name:'Fractal Design Torrent', price:149, specs:'Mid-Tower · Maximale airflow · Open front mesh', tags:['gaming','content'] },
+    { name:'Lian Li O11 Dynamic EVO', price:159, specs:'Mid/Full Tower · Iconisch design · Dual chamber', tags:['gaming','content'] },
+    { name:'Phanteks Enthoo Pro 2', price:189, specs:'Full Tower · Veel ruimte · Groot waterkoelingssysteem', tags:['content'] },
+  ],
+  voeding: [
+    { name:'400W 80+ Bronze PSU', price:39, specs:'Seasonic · Voldoende voor budget builds zonder GPU', tags:['school'] },
+    { name:'550W 80+ Gold PSU', price:69, specs:'Be quiet! Pure Power · Modular · Mid-range builds', tags:['school','werk'] },
+    { name:'650W 80+ Gold PSU', price:79, specs:'Corsair RM650x · Full Modular · Betrouwbaar', tags:['werk','gaming'] },
+    { name:'750W 80+ Gold PSU', price:99, specs:'Seasonic Focus GX · Full Modular · RTX 4070 klaar', tags:['gaming'] },
+    { name:'850W 80+ Gold PSU', price:129, specs:'Corsair RM850x · Full Modular · RTX 4080/4090 klaar', tags:['gaming','content'] },
+    { name:'1000W 80+ Platinum PSU', price:179, specs:'Seasonic Prime · Full Modular · Hoog rendement', tags:['content'] },
+    { name:'1200W 80+ Platinum PSU', price:229, specs:'ASUS ROG Thor · Full Modular · OLED wattage display', tags:['content'] },
+  ],
+  koeling: [
+    { name:'Stock koeler (meegeleverd)', price:0, specs:'Met processor meegeleverd · Voldoende voor lage belasting', tags:['school'] },
+    { name:'be quiet! Pure Rock Slim 2', price:29, specs:'Luchtkoeling · 100W TDP · Compact · Stil', tags:['school','werk'] },
+    { name:'be quiet! Pure Rock 2', price:39, specs:'Luchtkoeling · 150W TDP · Stil · AM4/AM5/LGA1700', tags:['school','werk'] },
+    { name:'DeepCool AK400', price:35, specs:'Luchtkoeling · 220W TDP · Goede prijs/prestatie', tags:['werk','gaming'] },
+    { name:'Arctic Freezer 36 A-RGB', price:59, specs:'Luchtkoeling · Dual tower · 200W TDP · RGB', tags:['gaming','werk'] },
+    { name:'Noctua NH-D15', price:99, specs:'Luchtkoeling · Dual tower · 250W TDP · Topprestaties', tags:['gaming','content'] },
+    { name:'Corsair iCUE H100i (240mm AIO)', price:99, specs:'240mm waterkoeling · RGB · Top performance', tags:['gaming'] },
+    { name:'Arctic Liquid Freezer III 240', price:89, specs:'240mm AIO · Uitstekende prijs/prestatie', tags:['gaming','content'] },
+    { name:'NZXT Kraken 360 Elite', price:179, specs:'360mm AIO · LCD display · Maximale koeling', tags:['gaming','content'] },
+    { name:'be quiet! Silent Loop 2 360', price:159, specs:'360mm AIO · Fluisterstil · Premium build', tags:['content'] },
+  ]
+};
+
+// Usecase tips
+const UC_TIPS = {
+  gaming: '🎮 <strong style="color:var(--white)">Gaming</strong> — High-end GPU\'s, snelle processors en genoeg RAM voor de beste gaming ervaring.',
+  content: '🎬 <strong style="color:var(--white)">Content Creation</strong> — Veel cores, veel RAM en een krachtige GPU voor video editing en 3D rendering.',
+  werk: '💼 <strong style="color:var(--white)">Werk / Thuis</strong> — Betrouwbare middenklasse onderdelen. Snel genoeg voor alles, zonder overkill.',
+  school: '📚 <strong style="color:var(--white)">School / Budget</strong> — Betaalbare onderdelen die prima werken voor documenten, Teams, browsen en studeren.'
+};
+
+// State
+const selected = {};
+let currentUsecase = 'gaming';
+let currentTab = 'processor';
+
+function setUsecaseMain(btn, uc) {
+  document.querySelectorAll('.usecase-main-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentUsecase = uc;
+  document.getElementById('uc-tip').innerHTML = UC_TIPS[uc];
+  // Re-render current tab and clear selections that don't fit
+  renderAllTabs();
+  // Clear selections not in new usecase
+  for (const cat of Object.keys(selected)) {
+    const part = PARTS[cat].find(p => p.name === selected[cat].name);
+    if (part && !part.tags.includes(uc)) {
+      delete selected[cat];
+    }
+  }
+  updateSummary();
+}
+
+function renderAllTabs() {
+  for (const cat of Object.keys(PARTS)) {
+    renderTab(cat);
+  }
+}
+
+function renderTab(cat) {
+  const list = document.getElementById('list-' + cat);
+  if (!list) return;
+  const parts = PARTS[cat];
+  let html = '';
+  let shown = 0;
+
+  // Sort: recommended for usecase first, then others
+  const recommended = parts.filter(p => p.tags.includes(currentUsecase));
+  const others = parts.filter(p => !p.tags.includes(currentUsecase));
+
+  const render = (part, isRec) => {
+    const isSelected = selected[cat] && selected[cat].name === part.name;
+    let tag = '';
+    if (isRec) {
+      if (currentUsecase === 'school') tag = '<span class="part-tag tag-budget">✓ Budget</span>';
+      else if (part.tags.includes('content') && currentUsecase === 'content') tag = '<span class="part-tag tag-top">✓ Aanbevolen</span>';
+      else tag = '<span class="part-tag tag-aanbevolen">✓ Aanbevolen</span>';
+    }
+    const priceStr = part.price === 0 ? 'Gratis' : '€' + part.price.toLocaleString('nl-NL');
+    return `<div class="part-row${isSelected ? ' selected' : ''}" onclick="selectPart('${cat}', '${part.name.replace(/'/g,"\\'")}', ${part.price})">
+      <div class="part-info">
+        <div class="part-name">${part.name}${tag}</div>
+        <div class="part-specs">${part.specs}</div>
+      </div>
+      <div class="part-right">
+        <div class="part-price">${priceStr}</div>
+        <div class="part-check">✓</div>
+      </div>
+    </div>`;
+  };
+
+  if (recommended.length > 0) {
+    html += `<div style="padding:10px 28px 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--blue)">Aanbevolen voor jou</div>`;
+    recommended.forEach(p => { html += render(p, true); shown++; });
+  }
+  if (others.length > 0) {
+    html += `<div style="padding:10px 28px 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted)">Overige opties</div>`;
+    others.forEach(p => { html += render(p, false); });
+  }
+  list.innerHTML = html;
+}
+
+function switchTab(cat) {
+  document.querySelectorAll('.config-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel-section').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel-' + cat).classList.add('active');
+  currentTab = cat;
+}
+
+function selectPart(cat, name, price) {
+  // Toggle
+  if (selected[cat] && selected[cat].name === name) {
+    delete selected[cat];
+  } else {
+    selected[cat] = { name, price };
+  }
+  renderTab(cat);
+  updateSummary();
+}
+
+function updateSummary() {
+  const container = document.getElementById('summary-parts');
+  const totalEl = document.getElementById('summary-total');
+  const priceEl = document.getElementById('total-price');
+  const cats = Object.keys(selected);
+
+  if (cats.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔩</div>Klik op een onderdeel om te beginnen</div>';
+    totalEl.style.display = 'none';
+    return;
+  }
+
+  const catLabels = {
+    processor:'Processor', moederbord:'Moederbord', ram:'RAM',
+    gpu:'GPU', opslag:'Opslag', kast:'Kast', voeding:'Voeding', koeling:'Koeling'
+  };
+
+  let html = '', total = 0;
+  for (const [cat, part] of Object.entries(selected)) {
+    total += part.price;
+    const priceStr = part.price === 0 ? 'Gratis' : '€' + part.price.toLocaleString('nl-NL');
+    html += `<div class="summary-row">
+      <span class="summary-part-name">${catLabels[cat]}</span>
+      <span class="summary-part-val">${priceStr}</span>
+    </div>`;
+  }
+  html += `<div class="summary-row" style="margin-top:8px">
+    <span class="summary-part-name" style="color:var(--blue)">+ Arbeidskosten</span>
+    <span class="summary-part-val" style="color:var(--blue)">Offerte</span>
+  </div>`;
+
+  container.innerHTML = html;
+  totalEl.style.display = 'flex';
+  priceEl.textContent = '€' + total.toLocaleString('nl-NL');
+}
+
+function submitBuild() {
+  const cats = Object.keys(selected);
+  if (cats.length === 0) { showToast('⚠️ Kies eerst een paar onderdelen!'); return; }
+  const ucLabels = { gaming:'Gaming', content:'Content Creation', werk:'Werk/Thuis', school:'School/Budget' };
+  document.getElementById('form-msg').value =
+    'Gebruiksdoel: ' + (ucLabels[currentUsecase] || currentUsecase) + '\n\nGeselecteerde onderdelen:\n' +
+    Object.entries(selected).map(([c,p]) => `- ${c}: ${p.name} (${p.price === 0 ? 'Gratis' : '€' + p.price})`).join('\n');
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+  showToast('✅ Build geladen in contactformulier!');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// Init
+renderAllTabs();
+</script>
 
 <!-- CONTACT -->
 <section id="contact">
@@ -1020,113 +983,18 @@
 </footer>
 
 <div class="toast" id="toast"></div>
-
 <script>
-  // State
-  const selected = {};
-  let usecase = 'Gaming';
-
-  function switchTab(cat) {
-    document.querySelectorAll('.config-tab').forEach((t,i) => t.classList.remove('active'));
-    document.querySelectorAll('.panel-section').forEach(p => p.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById('panel-' + cat).classList.add('active');
-  }
-
-  function selectPart(cat, name, price) {
-    // Deselect previous in same category
-    const panel = document.getElementById('panel-' + cat);
-    panel.querySelectorAll('.part-row').forEach(r => r.classList.remove('selected'));
-
-    // Toggle: if same item already selected, deselect
-    if (selected[cat] && selected[cat].name === name) {
-      delete selected[cat];
-    } else {
-      selected[cat] = { name, price };
-      event.currentTarget.classList.add('selected');
-    }
-    updateSummary();
-  }
-
-  function updateSummary() {
-    const container = document.getElementById('summary-parts');
-    const totalEl = document.getElementById('summary-total');
-    const priceEl = document.getElementById('total-price');
-
-    const cats = Object.keys(selected);
-    if (cats.length === 0) {
-      container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔩</div>Klik op een onderdeel om te beginnen</div>';
-      totalEl.style.display = 'none';
-      return;
-    }
-
-    const catLabels = {
-      processor:'Processor', moederbord:'Moederbord', ram:'RAM',
-      gpu:'GPU', opslag:'Opslag', kast:'Kast', voeding:'Voeding', koeling:'Koeling'
-    };
-
-    let html = '';
-    let total = 0;
-    for (const [cat, part] of Object.entries(selected)) {
-      total += part.price;
-      html += `<div class="summary-row">
-        <span class="summary-part-name">${catLabels[cat] || cat}</span>
-        <span class="summary-part-val">€${part.price.toLocaleString('nl-NL')}</span>
-      </div>`;
-    }
-
-    // Labour
-    html += `<div class="summary-row" style="margin-top:8px">
-      <span class="summary-part-name" style="color:var(--blue)">+ Arbeidskosten</span>
-      <span class="summary-part-val" style="color:var(--blue)">Offerte</span>
-    </div>`;
-
-    container.innerHTML = html;
-    totalEl.style.display = 'flex';
-    priceEl.textContent = '€' + total.toLocaleString('nl-NL');
-  }
-
-  function setUsecase(btn, val) {
-    document.querySelectorAll('.usecase-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    usecase = val;
-  }
-
-  function submitBuild() {
-    const cats = Object.keys(selected);
-    if (cats.length === 0) {
-      showToast('⚠️ Kies eerst een paar onderdelen!');
-      return;
-    }
-    // Scroll to contact and pre-fill
-    document.getElementById('form-msg').value =
-      'Gebruiksdoel: ' + usecase + '\n\nGeselecteerde onderdelen:\n' +
-      Object.entries(selected).map(([c,p]) => `- ${c}: ${p.name} (€${p.price})`).join('\n');
-    document.getElementById('contact').scrollIntoView({behavior:'smooth'});
-    showToast('✅ Build geladen in contactformulier!');
-  }
-
-  function submitForm() {
-    const naam = document.getElementById('form-naam').value.trim();
-    const email = document.getElementById('form-email').value.trim();
-    const msg = document.getElementById('form-msg').value.trim();
-    if (!naam || !email || !msg) {
-      showToast('⚠️ Vul naam, e-mail en bericht in');
-      return;
-    }
-    showToast('✅ Bericht verstuurd! We nemen snel contact op.');
-    document.getElementById('form-naam').value = '';
-    document.getElementById('form-email').value = '';
-    document.getElementById('form-msg').value = '';
-    document.getElementById('form-budget').value = '';
-  }
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3500);
-  }
+function submitForm() {
+  const naam = document.getElementById('form-naam').value.trim();
+  const email = document.getElementById('form-email').value.trim();
+  const msg = document.getElementById('form-msg').value.trim();
+  if (!naam || !email || !msg) { showToast('⚠️ Vul naam, e-mail en bericht in'); return; }
+  showToast('✅ Bericht verstuurd! We nemen snel contact op.');
+  document.getElementById('form-naam').value = '';
+  document.getElementById('form-email').value = '';
+  document.getElementById('form-msg').value = '';
+  document.getElementById('form-budget').value = '';
+}
 </script>
 </body>
 </html>
